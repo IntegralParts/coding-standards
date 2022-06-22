@@ -1,23 +1,23 @@
-![CX Partners](https://www.cxpartners.co.uk/ui/img/logo.png)
+![Integral Parts](https://integralparts.com/wp-content/uploads/2016/09/favicon.png)
 
 # Front-end Coding Standards and Best Practices
 
-a.k.a. *'How to do webdev at cxpartners'*.
+a.k.a. *'How to do web development at Integral Parts'*.
 
 ## Overview
 
-These guidelines, principles and standards allow us to:
+These guidelines, principles and standards allow the entire team to:
 
 - produce code of a consistent quality across all projects we undertake
 - work concurrently with multiple devs on the same codebase at the same time in the same way
 - produce code that is less prone to bugs and regressions, is easier to understand and debug
 - write code that supports re-use.
 
-It is required reading for all devs (internal and external) working on a cx web development project.
+It is required reading for all devs (internal and external) working on an Integral Parts web development project.
 
 ## Contributing
 
-When considering coding standards we're more interested in **consistency** than **developer freedom**. However this should be considered a living document – it will evolve to reflect the changing needs of the cx dev team and the work we do.
+When considering coding standards we're more interested in **consistency** than **developer freedom**. However this should be considered a living document – it will evolve to reflect the changing needs of the IP dev team and the work we do.
 
 ### How to contribute
 
@@ -36,7 +36,7 @@ There are some general things we can do in front-end development:
 
 - Send fewest bytes possible down the wire
 
-- Avoid unnecessary use of `display: none;`
+- Avoid unnecessary use of `display: none;` or `visibility: hidden;`
 
 - Keep CSS selectors concise (be wary of SASS nesting)
 
@@ -46,17 +46,37 @@ There are some general things we can do in front-end development:
 
 - Lazy load 'supplementary' content (especially images)
 
-### Testing and QA should find no problems
+### Web Accessibility
 
-- Code is a craft - make it your responsibility to ensure it is the best it can be; that it's tested, bug free, and adheres to these guidelines. Testing and QA folks aren't responsible for quality - developers are.
+Web accessilibility is an important consideration when developing projects for Integral Parts clients. 
 
-- Don't use testers as bug catchers - testers should find no problems after you have committed your code.  When testers find bugs, tickets need to be opened, developers assigned and scheduled in to fix the problem.  This lengthens the time it takes from identifying to resolving a bug.
+By making the website accessible, you are ensuring that all of the potential users, including people with disabilities, have a decent user experience and are able to easily access your information. By implementing these accessibility best practices, you are also improving the usability for all site users.
 
-- Make sure, as much as possible, you have tested your code on a reasonable number of devices so you can catch problems before you commit to the repo.
+#### How to build for accessibility
+
+Accessible sites present information through multiple sensory channels, such as sound and sight, and they allow for additional means of site navigation and interactivity beyond typical point-and-click-interface: keyboard-based control and voice-based navigation. The combination of the multisensory and multi-interactivity approach allows disabled users to access the same information as nondisabled users.
+
+When building, make sure to consider the following:
+
+- Images should include Alt text in the markup that describes the image being shown. Complex images should have more extensive descriptions near the image (perhaps as a caption or descriptive summary).
+
+- Functionality should be accessible through mouse and keyboard and be tagged to work with voice-control systems.
+
+- Provide closed-caption transcripts for any audio/video.
+
+- The site should provide a 'skip navigation' feature to allow users to quickly skip repetitive sets of links.
+
+- Once development is complete, test the site against [WCAG 2.0 Guidelines](https://www.w3.org/TR/WCAG20/) 
+
+### Client reviews should find no problems
+
+- Code is a craft - make it your responsibility to ensure it is the best it can be; that it's tested, bug free, and adheres to these guidelines. Clients and QA folks aren't responsible for quality - developers are.
+
+- Make sure, as much as possible, you have tested your code on a reasonable number of devices (using a tool like [Browserstack](https://browserstack.com)) so you can catch problems before you commit to the repo. 
 
 ### You are producing source code
 
-Due to the size of most webdev projects that cxpartners undertakes, and the processes and methodologies we adhere to, there will always be a build process that takes source code and generates built artefacts.
+Due to the size of most webdev projects that Integral Parts undertakes, and the processes and methodologies we adhere to, there will likely be a build process that takes source code and generates built artefacts.
 
 For example:
 
@@ -72,9 +92,19 @@ This means:
 
 - Don't check generated files into the repo, e.g. CSS files when using SASS
 
-- Always check in configuration files for the tools that you use, e.g. `config.rb` for Compass, `mixture.json` for Mixture.io app
+- Always check in configuration files for the tools that you use, e.g. Node.js, Gulp, and Webpack
 
 - When including CSS and JS reference the non-minified versions
+
+### Designing and coding a Shopify theme
+
+In addition to the points mentioned above about performance, web accessibility, and quality, there are some specific Shopify theme development points that are important to consider. 
+
+- Section and blocks: When developing a theme, you should consider when it is appropriate to provide functionality to the client with a section or a block. These modular components give merchances the opportunity to customize and extend their theme. They can add and remove these sections or blocks, adjust settings and customize to create pages that are unique and conform to the design.
+
+- Settings: Global site settings should be kept to a minimum amount to ensure a streamlined experience for the user and to improve Liquid render times by reducing the number of variables needed to output a page.
+
+- Metafields: When appropriate, use Shopify resource metafields to associate additional infomration with products, collections, blogs, etc. and provide the user with an easy way to edit content from within the Shopify Admin UI.
 
 ### Don't Repeat Yourself (DRY)
 
@@ -86,13 +116,13 @@ If you stick to this principle, you will ensure that you will only ever need to 
 
 Separate *structure* from *presentation* from *behaviour* to aid maintainability and understanding.
 
-- Keep CSS (presentation), JS (behaviour) and HTML (structure) in separate files
+- Keep CSS (presentation), JS (behaviour) and HTML (structure) in separate files whenever possible
 
 - Avoid writing inline CSS or Javascript in HTML
 
 - Avoid writing CSS or HTML in Javascript
 
-- Don't choose HTML elements to imply style
+- Don't choose HTML elements to imply style. For example, h1 because you need big, bold text. Pick the correct element for the document structure
 
 - Where appropriate, use CSS rather than Javascript for animations and transitions
 
@@ -142,13 +172,11 @@ Don't use `@fixme` (which defines things that are broken) - you shouldn't be com
 ***
 ## Styling with CSS & SASS
 
-Our approach to CSS is influenced by Nicole Sullivan's [OOCSS](http://oocss.org/) ideas, and Jonathan Snook's Scalable and Modular Architecture for CSS ([SMACSS](http://smacss.com/)), both of which advocate a general separation of concerns to promote re-usability and prevent code bloat.
+Our approach to CSS is influenced by [SMACSS](http://smacss.com/) and [Block Element Modifier](http://getbem.com/introduction/), which advocates a general separation of concerns to promote re-usability and prevent code bloat. Please follow this approach or review the existing code to follow the project approach if it is different.
 
 ### General Guidelines
 
-- Lint your SCSS according to the `scss-lint` configuration file found in the root of all cx projects
-
-- Promote scalable and modular css architecture using the principles defined in the SMACSS style guide
+- Promote scalable and modular css architecture using the principles defined in the [SMACSS](http://smacss.com/) style guide
 
 - Utilise [BEM's](http://coding.smashingmagazine.com/2012/04/16/a-new-front-end-methodology-bem/) 'Block', 'Element', 'Modifier' methodology
 
@@ -358,12 +386,12 @@ body { color: black; }
 
 ### Unit sizing
 
-Use `rem`s to size fonts. These will take into account the user's font size setting ([this research from 2006 suggests around 10% of people have changed it](http://archive.oreilly.com/pub/post/more_statistics_on_user_clicks.html)). 
+Whenever possible, use `rem`s to size fonts. These will take into account the user's font size setting ([this research from 2006 suggests around 10% of people have changed it](http://archive.oreilly.com/pub/post/more_statistics_on_user_clicks.html)). 
 
 
 Avoid the `font-size: 62.5%` hack to ensure that a `(r)em` unit equates to 10px. Never change the font size of the root element from its default of 100%/16px. Far more elements are 16px than 10px, so this way we have to specify the sizes of fewer things. This is where the cascade excels.
 
-Use unitless line-heights.
+Use unitless line-heights. Instead use values like `1.25`.
 
 If not using flexbox or css columns / grids, use percentages for fluid layouts and components.
 
@@ -430,9 +458,7 @@ Use `box-sizing: border-box` globally. This makes dealing with multiple units in
 
 ### Doctype
 
-Use the HTML5 doctype to indicate that you are serving HTML5 content.  Using this doctype ensures your browser's layout engine uses 'standards' (or 'no-quirks') mode (rather than 'quirks' or 'almost-standard' modes).
-
-Any browsers that don't currently support HTML5 will enter this mode and interpret non-HTML5 in a compliant way whilst ignoring new, unsupported features.
+Use the HTML5 doctype to indicate that you are serving HTML5 content. 
 
 ```
 <!DOCTYPE html>
@@ -503,7 +529,7 @@ The presence of the attribute itself implies that the value is "true", an absenc
 
 ### General guidelines
 
-- We use React.js - jQuery has been superceded. Also, we prefer to make universal / isomorphic React applications
+- We prefer to use vanilla JS or React.js - jQuery has been superceded. 
 
 - Use ES6 - Babel will transpile it.
 
@@ -529,7 +555,7 @@ The presence of the attribute itself implies that the value is "true", an absenc
 
 - Don't use CoffeeScript - it's an abstraction too far. Javascript is far from a perfect language, but learn how to deal with the issues of Javascript using recognised and accepted patterns and adhere to best practice guidelines.
 
-- Typescript: totally open to being persuaded. Lots of people are drinking the Koolaid, present a business case.  
+- Typescript: this is appropriate in certain situations. Let's discuss the case first before using it.
 
 - Avoid applying styles with Javascript, preferably add or remove classes.  Keep style in CSS to make it easier to maintain and debug.
 
